@@ -1,0 +1,79 @@
+@page "/entidad{tipo}/editar"
+@rendermode InteractiveServer
+
+<PageTitle>Editar Entidad</PageTitle>
+<h3>Editando @Tipo</h3>
+<EditForm Model="instancia" OnValidSubmit="GuardarDatos">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <InputText id="nombre" class="form-control" @bind-Value="instancia.Nombre" />
+    </div>
+
+    <div class="form-group">
+        <label for="tipo">Tipo</label>
+        <InputSelect id="tipo" class="form-control" @bind-Value="instancia.Tipo">
+            <option value="Serie">Serie</option>
+            <option value="Pelicula">Pelicula</option>
+            <option value="Libro">Libro</option>
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label for="pais">Pais</label>
+        <InputText id="pais" class="form-control" @bind-Value="instancia.Pais" />
+    </div>
+
+    <div class="form-group">
+        <label for="idioma">Idioma</label>
+        <InputText id="idioma" class="form-control" @bind-Value="instancia.Idioma" />
+    </div>
+
+    <div class="form-group">
+        <label for="Resumen">Resumen</label>
+        <InputText id="Resumen" class="form-control" @bind-Value="instancia.Resumen" />
+    </div>
+    <div class="form-group">
+        <label for="FotoUrl">Foto</label>
+        <Input type="Url" id="FotoUrl" class="form-control" @bind="instancia.FotoUrl" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</EditForm>
+
+    
+@code{
+    [Parameter]
+    public string Tipo {get; set;}= ""; 
+
+    protected override void OnParametersSet()
+    {
+        switch (Tipo)
+        {
+            case "libros":
+                tipoEntidad = global::Tipo.Libro;
+                break;
+            case "peliculas":
+                tipoEntidad = global::Tipo.Pelicula;
+                break;
+            case "series":
+                tipoEntidad = global::Tipo.Serie;
+                break;
+        }
+    }
+
+
+    SeriePeliculaLibro instancia=new SeriePeliculaLibro();
+
+    Tipo tipoEntidad;
+
+    async Task GuardarDatos()
+    {
+
+        
+        Console.WriteLine("Guardando datos"); 
+    }
+    
+}
